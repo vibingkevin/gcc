@@ -38,6 +38,11 @@ python3 contrib/ohos-abi-compat/run.py \
 C++ 布局生成器保留上游 `-c` 模式；C 生成器按 Clang 能力禁用 decimal 类型。
 本阶段没有增加 seed 接口，也没有多 seed 循环。
 
+生成式用例失败时，可用相同 `--generated-size`、`--case` 和新输出目录重放，
+追加 `--layout-debug` 启用上游已有的 `DBG` 输出；日志中的 `fail n.m`
+分别是布局样本编号和断言编号。该选项仅增加 `-DDBG`，不改变断言或跳过检查。
+用 `--mode both` 对照目标文件混编与双 SO，以区分动态链接问题。
+
 ## 结果与边界
 
 `environment.json` 记录编译器版本和哈希、SDK、配置、源码版本。
@@ -57,3 +62,5 @@ SO 使用各自编译器的链接器，main 使用 A；实际部署同一份 SDK
 ```sh
 python3 -m unittest discover -s contrib/ohos-abi-compat -p 'test_*.py' -v
 ```
+
+本轮实测规模、失败分类及上游用例修改原因见 [VALIDATION.md](VALIDATION.md)。

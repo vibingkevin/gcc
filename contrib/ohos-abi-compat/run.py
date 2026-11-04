@@ -231,6 +231,8 @@ class Builder:
             if case["id"] == "gcc.dg/compat/struct-by-value-22":
                 raise Unsupported("Clang 不支持结构体内 VLA；禁用后此用例将没有断言，故整例跳过")
             options = [source_options(source) for source in case["sources"]]
+            if self.args.layout_debug and case["id"].startswith("generated/"):
+                options = [flags + ["-DDBG"] for flags in options]
             result["sources"] = [{"path": str(source), "sha256": sha256(source)} for source in case["sources"]]
             result["source_options"] = options
             main, x, y = case["sources"]
@@ -347,6 +349,7 @@ def main():
     parser.add_argument("--out", type=Path, required=True, help="必须是新目录，防止混入旧结果")
     parser.add_argument("--suite", choices=("smoke", "fixed", "generated", "all", "selftest", "negative"), default="smoke")
     parser.add_argument("--generated-size", choices=("default", "full"), default="default")
+    parser.add_argument("--layout-debug", action="store_true", help="启用上游布局用例的 DBG 断言编号输出，不修改源码或判定")
     parser.add_argument("--mode", choices=("shared", "objects", "both"), default="shared")
     parser.add_argument("--case", action="append", help="用例 ID glob，可重复")
     parser.add_argument("--jobs", type=int, default=4)
