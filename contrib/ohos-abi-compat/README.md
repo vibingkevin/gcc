@@ -4,7 +4,7 @@
 JB Clang 21.1.6（B）的 OHOS ARM64 互操作。两侧共用 DevEco native SDK，
 固定 `-O3`，只运行 `AA / AB / BA`。main 始终由 A 编译、链接。
 
-Python 3.11+，宿主 C 编译器、DevEco native SDK、JB LLVM dev 包即可运行；
+Python 3.9+，宿主 C 编译器、DevEco native SDK、JB LLVM dev 包即可运行；
 无需构建 GCC，也不需要安装 DejaGnu。
 
 ```sh
