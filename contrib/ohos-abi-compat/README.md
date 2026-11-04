@@ -66,4 +66,5 @@ SO 使用各自编译器的链接器，main 使用 A；实际部署同一份 SDK
 python3 -m unittest discover -s contrib/ohos-abi-compat -p 'test_*.py' -v
 ```
 
-本轮实测规模、失败分类及上游用例修改原因见 [VALIDATION.md](VALIDATION.md)。
+当前 C++17 下的 O0/O3 对照见 [CXX17-VALIDATION.md](CXX17-VALIDATION.md)。
+最初混合标准结果及上游用例修改原因见 [VALIDATION.md](VALIDATION.md)。

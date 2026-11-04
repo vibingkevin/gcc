@@ -1,5 +1,8 @@
 # OHOS ABI 验证记录（2026-11-04）
 
+> 本页记录最初的 O3 / gnu++14 与上游 C++14/17 混合配置。
+> 用户随后要求统一为 Kotlin runtime 的 C++17；新结果见 [CXX17-VALIDATION.md](CXX17-VALIDATION.md)。
+
 本轮在 ma1 构建、OHOS ARM64 真机执行；所有目标源码使用 `-O3`，仅跑
 `AA / AB / BA`，main 始终由 A 编译、链接。A/B 表示 x/y 两个方向使用的
 编译器；`shared` 模式各自生成 `libx.so`、`liby.so`。

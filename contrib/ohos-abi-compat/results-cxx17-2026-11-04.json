@@ -1,0 +1,319 @@
+{
+  "说明": "统一 C++17，AA/AB/BA，O0/O3 对照；编译失败与不适用组不计为执行通过。",
+  "framework_commit": "f89022c1be07c224ddde86dab0463ee7fad36691",
+  "kotlin_reference_commit": "ec112ef9ec3e4446f2d07188f626dce8364eb433",
+  "suites": {
+    "abi-all-cxx17-o0-ma1": {
+      "target": "aarch64-unknown-linux-ohos",
+      "cxx_standard": "c++17",
+      "optimization": "-O0",
+      "pairs": [
+        "AA",
+        "AB",
+        "BA"
+      ],
+      "sdk": {
+        "apiVersion": "24",
+        "displayName": "Native",
+        "meta": {
+          "metaVersion": "3.0.0"
+        },
+        "path": "native",
+        "releaseType": "Release",
+        "version": "6.1.1.125"
+      },
+      "driver_sha256": "2a435a39df27e8585903d2de54fd28eaff0fd0db7ca3dcbb469412cfd426ea5b",
+      "runtime_sha256": "388e0df23d7bfddc2ea01b4e87f8dc359e33df1a7a44705e0a672609ee45b2f9",
+      "source_commit": "c77e14e53e34a7130430c29f2477fa92e9f6a219",
+      "compilers": {
+        "A": {
+          "version": "OHOS (dev) clang version 15.0.4 (llvm-project 99548401bd80576251755b185ab95945e5fe7884)",
+          "sha256": "0017af1410236229ba210b09ca0c3acbbcd4b2102089d67c5ba7ac02b9555ca9"
+        },
+        "B": {
+          "version": "clang version 21.1.6 (https://github.com/Kotlin/llvm-project c2e420df942a21f93c15248b4fb9259737fa58c1)",
+          "sha256": "cfeb7a6650403d72545304248e4fd37df5f8dca9114cb99b6f3e9cacdf37643a"
+        }
+      },
+      "summary": {
+        "cases": 686,
+        "status": {
+          "PASS": 602,
+          "UNSUPPORTED": 23,
+          "BUILD_FAIL": 1,
+          "RUN_FAIL": 60
+        },
+        "runs": {
+          "PASS": 1843,
+          "RUN_FAIL": 143
+        },
+        "seconds": 517.43
+      },
+      "raw_sha256": {
+        "environment.json": "57b2f39622c831cee87178f282f51ae6be497f5998c554d00a3e65d8bc79ba79",
+        "report.json": "3bd5ce1f2d7c836357b617eb7b1088ceb2ddc78738a575fdf6b56827a7e83141",
+        "results.tar.gz": "fc5126ea9056e6aeda2f9d8a1bdaec3491749e99f137a76bebf09e85cb4e1ca3"
+      }
+    },
+    "abi-all-cxx17-o3-ma1": {
+      "target": "aarch64-unknown-linux-ohos",
+      "cxx_standard": "c++17",
+      "optimization": "-O3",
+      "pairs": [
+        "AA",
+        "AB",
+        "BA"
+      ],
+      "sdk": {
+        "apiVersion": "24",
+        "displayName": "Native",
+        "meta": {
+          "metaVersion": "3.0.0"
+        },
+        "path": "native",
+        "releaseType": "Release",
+        "version": "6.1.1.125"
+      },
+      "driver_sha256": "2a435a39df27e8585903d2de54fd28eaff0fd0db7ca3dcbb469412cfd426ea5b",
+      "runtime_sha256": "388e0df23d7bfddc2ea01b4e87f8dc359e33df1a7a44705e0a672609ee45b2f9",
+      "source_commit": "c77e14e53e34a7130430c29f2477fa92e9f6a219",
+      "compilers": {
+        "A": {
+          "version": "OHOS (dev) clang version 15.0.4 (llvm-project 99548401bd80576251755b185ab95945e5fe7884)",
+          "sha256": "0017af1410236229ba210b09ca0c3acbbcd4b2102089d67c5ba7ac02b9555ca9"
+        },
+        "B": {
+          "version": "clang version 21.1.6 (https://github.com/Kotlin/llvm-project c2e420df942a21f93c15248b4fb9259737fa58c1)",
+          "sha256": "cfeb7a6650403d72545304248e4fd37df5f8dca9114cb99b6f3e9cacdf37643a"
+        }
+      },
+      "summary": {
+        "cases": 686,
+        "status": {
+          "PASS": 603,
+          "UNSUPPORTED": 23,
+          "BUILD_FAIL": 1,
+          "RUN_FAIL": 59
+        },
+        "runs": {
+          "PASS": 1846,
+          "RUN_FAIL": 140
+        },
+        "seconds": 492.2
+      },
+      "raw_sha256": {
+        "environment.json": "06a7c22387294c8477dba533714938354dad6c872b6a09bbf89c865efd32a430",
+        "report.json": "2278226ac5424167d2f49a28fe284c3aecccca040ab6f96b2be70640ccaea59b",
+        "results.tar.gz": "5868d80c4de9f466bafa43e2fa7aee8ddeb2a4ec6008d65dc27588fc3c61c6ae"
+      }
+    },
+    "abi-cxx17-o0-t153-ma1": {
+      "target": "aarch64-unknown-linux-ohos",
+      "cxx_standard": "c++17",
+      "optimization": "-O0",
+      "pairs": [
+        "AA",
+        "AB",
+        "BA"
+      ],
+      "sdk": {
+        "apiVersion": "24",
+        "displayName": "Native",
+        "meta": {
+          "metaVersion": "3.0.0"
+        },
+        "path": "native",
+        "releaseType": "Release",
+        "version": "6.1.1.125"
+      },
+      "driver_sha256": "2a435a39df27e8585903d2de54fd28eaff0fd0db7ca3dcbb469412cfd426ea5b",
+      "runtime_sha256": "388e0df23d7bfddc2ea01b4e87f8dc359e33df1a7a44705e0a672609ee45b2f9",
+      "source_commit": "f89022c1be07c224ddde86dab0463ee7fad36691",
+      "compilers": {
+        "A": {
+          "version": "OHOS (dev) clang version 15.0.4 (llvm-project 99548401bd80576251755b185ab95945e5fe7884)",
+          "sha256": "0017af1410236229ba210b09ca0c3acbbcd4b2102089d67c5ba7ac02b9555ca9"
+        },
+        "B": {
+          "version": "clang version 21.1.6 (https://github.com/Kotlin/llvm-project c2e420df942a21f93c15248b4fb9259737fa58c1)",
+          "sha256": "cfeb7a6650403d72545304248e4fd37df5f8dca9114cb99b6f3e9cacdf37643a"
+        }
+      },
+      "summary": {
+        "cases": 1,
+        "status": {
+          "RUN_FAIL": 1
+        },
+        "runs": {
+          "RUN_FAIL": 6
+        },
+        "seconds": 4.16
+      },
+      "raw_sha256": {
+        "environment.json": "776078859557d50ae7865797f2dbc05f3dfc6132228d2a35789106ca9c430a59",
+        "report.json": "0a7387c9047d97696b82acd815f36cfc8b3d1d46dbe6dfc56c7fad0a835e72e9",
+        "results.tar.gz": "93d2c16d7a15296e404a44f5c0389f310371489fef4b1d80d77d13b4bc2d5dc0"
+      }
+    }
+  },
+  "t153_replay": [
+    {
+      "mode": "objects",
+      "pair": "AA",
+      "exit_code": 139,
+      "status": "RUN_FAIL"
+    },
+    {
+      "mode": "objects",
+      "pair": "AB",
+      "exit_code": 139,
+      "status": "RUN_FAIL"
+    },
+    {
+      "mode": "objects",
+      "pair": "BA",
+      "exit_code": 139,
+      "status": "RUN_FAIL"
+    },
+    {
+      "mode": "shared",
+      "pair": "AA",
+      "exit_code": 139,
+      "status": "RUN_FAIL"
+    },
+    {
+      "mode": "shared",
+      "pair": "AB",
+      "exit_code": 139,
+      "status": "RUN_FAIL"
+    },
+    {
+      "mode": "shared",
+      "pair": "BA",
+      "exit_code": 139,
+      "status": "RUN_FAIL"
+    }
+  ],
+  "not_run": [
+    {
+      "id": "gcc.dg/compat/pr38736",
+      "status": "UNSUPPORTED",
+      "reason": "attribute ((aligned))"
+    },
+    {
+      "id": "gcc.dg/compat/scalar-by-value-dfp",
+      "status": "UNSUPPORTED",
+      "reason": "两套 Clang 不支持 GCC decimal floating point"
+    },
+    {
+      "id": "gcc.dg/compat/scalar-return-dfp",
+      "status": "UNSUPPORTED",
+      "reason": "两套 Clang 不支持 GCC decimal floating point"
+    },
+    {
+      "id": "gcc.dg/compat/struct-by-value-22",
+      "status": "UNSUPPORTED",
+      "reason": "Clang 不支持结构体内 VLA；禁用后此用例将没有断言，故整例跳过"
+    },
+    {
+      "id": "gcc.dg/compat/union-m128-1",
+      "status": "UNSUPPORTED",
+      "reason": "test SSE2 support"
+    },
+    {
+      "id": "gcc.dg/compat/vector-1a",
+      "status": "UNSUPPORTED",
+      "reason": "test SSE2 vector"
+    },
+    {
+      "id": "gcc.dg/compat/vector-1b",
+      "status": "UNSUPPORTED",
+      "reason": "test AVX vector"
+    },
+    {
+      "id": "gcc.dg/compat/vector-2a",
+      "status": "UNSUPPORTED",
+      "reason": "test SSE2 support"
+    },
+    {
+      "id": "gcc.dg/compat/vector-2b",
+      "status": "UNSUPPORTED",
+      "reason": "test AVX support"
+    },
+    {
+      "id": "g++.dg/compat/abi/bitfield1",
+      "status": "UNSUPPORTED",
+      "reason": "Clang 不支持 -funsigned-bitfields，不能静默忽略"
+    },
+    {
+      "id": "g++.dg/compat/abi/pr38736",
+      "status": "UNSUPPORTED",
+      "reason": "attribute ((aligned))"
+    },
+    {
+      "id": "g++.dg/compat/decimal/pass-1",
+      "status": "UNSUPPORTED",
+      "reason": "需要 dfp"
+    },
+    {
+      "id": "g++.dg/compat/decimal/pass-2",
+      "status": "UNSUPPORTED",
+      "reason": "需要 dfp"
+    },
+    {
+      "id": "g++.dg/compat/decimal/pass-3",
+      "status": "UNSUPPORTED",
+      "reason": "需要 dfp"
+    },
+    {
+      "id": "g++.dg/compat/decimal/pass-4",
+      "status": "UNSUPPORTED",
+      "reason": "需要 dfp"
+    },
+    {
+      "id": "g++.dg/compat/decimal/pass-5",
+      "status": "UNSUPPORTED",
+      "reason": "需要 dfp"
+    },
+    {
+      "id": "g++.dg/compat/decimal/pass-6",
+      "status": "UNSUPPORTED",
+      "reason": "需要 dfp"
+    },
+    {
+      "id": "g++.dg/compat/decimal/return-1",
+      "status": "UNSUPPORTED",
+      "reason": "需要 dfp"
+    },
+    {
+      "id": "g++.dg/compat/decimal/return-2",
+      "status": "UNSUPPORTED",
+      "reason": "需要 dfp"
+    },
+    {
+      "id": "g++.dg/compat/decimal/return-3",
+      "status": "UNSUPPORTED",
+      "reason": "需要 dfp"
+    },
+    {
+      "id": "g++.dg/compat/decimal/return-4",
+      "status": "UNSUPPORTED",
+      "reason": "需要 dfp"
+    },
+    {
+      "id": "g++.dg/compat/decimal/return-5",
+      "status": "UNSUPPORTED",
+      "reason": "需要 dfp"
+    },
+    {
+      "id": "g++.dg/compat/decimal/return-6",
+      "status": "UNSUPPORTED",
+      "reason": "需要 dfp"
+    },
+    {
+      "id": "g++.dg/compat/eh/unexpected1",
+      "status": "BUILD_FAIL",
+      "reason": "C++17 不允许 throw(Two)，SDK libc++ 的 C++17 模式无 std::set_unexpected"
+    }
+  ]
+}
