@@ -1,3 +1,6 @@
+// { dg-options "-fno-builtin" }
+// 在优化构建中保留本用例需要检查的分配和释放调用。
+
 #include <new>
 #include <cstddef>
 
@@ -22,6 +25,8 @@ int ret = 1;
 void
 new1_x ()
 {
+  // 排除程序启动期间对替换分配函数的调用造成的状态污染。
+  ret = 1;
   try
     {
       A *p = new A[4];
