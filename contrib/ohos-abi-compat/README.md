@@ -2,7 +2,7 @@
 
 复用 GCC C/C++ compat 用例及原始布局生成器，检查 DevEco Clang 15（A）与
 JB Clang 21.1.6（B）的 OHOS ARM64 互操作。两侧共用 DevEco native SDK，
-固定 `-O3`，只运行 `AA / AB / BA`。main 始终由 A 编译、链接。
+默认 `-O3`，可用 `--optimization 0` 补测 O0，只运行 `AA / AB / BA`。main 始终由 A 编译、链接。
 
 Python 3.9+，宿主 C 编译器、DevEco native SDK、JB LLVM dev 包即可运行；
 无需构建 GCC，也不需要安装 DejaGnu。
@@ -35,7 +35,10 @@ python3 contrib/ohos-abi-compat/run.py \
 - `--case 'g++.dg/compat/eh/*'`：按 ID 过滤，可重复指定。
 
 补充 C++ 用例覆盖跨库创建/销毁对象、虚调用、RTTI、异常、string/vector/shared_ptr。
-C++ 布局生成器保留上游 `-c` 模式；C 生成器按 Clang 能力禁用 decimal 类型。
+所有 C++ 翻译单元强制 `-std=c++17`，与 Kotlin runtime 一致，覆盖源文件的 `-std`。
+C++ 布局生成器保留上游 `-c` 生成的样本和空基类定义，但两侧均使用 C++17；C 生成器按 Clang 能力禁用 decimal 类型。
+`--generated-size full` 对应上游 `RUN_ALL_COMPAT_TESTS` 对生成器增加的
+`-n 15000`；这里使用双 SO 驱动，不直接运行 DejaGnu。
 本阶段没有增加 seed 接口，也没有多 seed 循环。
 
 生成式用例失败时，可用相同 `--generated-size`、`--case` 和新输出目录重放，
@@ -50,7 +53,7 @@ C++ 布局生成器保留上游 `-c` 模式；C 生成器按 Clang 能力禁用 
 每个用例的 `build.log` 包含可重放命令，`results.tar.gz` 包含设备日志和原始退出码。
 输出目录保留生成源码和二进制，不写入 Git。
 
-所有源码中的优化等级都被统一为 `-O3`。保留适用的语言、布局等其他选项。
+所有源码中的优化等级都被统一为选定的 O0/O3。保留适用的语言、布局等其他选项。
 目标条件按 OHOS AArch64 处理；不支持的条件或指令明确报告 `UNSUPPORTED`。
 未知编译错误保留为 `BUILD_FAIL`，不能自动变成跳过。`break/` 用例标记为历史 ABI
 变化用例，失败需要结合原用例说明判断，不能直接声称发现新回归。

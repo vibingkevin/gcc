@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""使用 DevEco/JB Clang 运行 GCC compat，固定 -O3 和 AA/AB/BA。"""
+"""使用 DevEco/JB Clang 运行 GCC compat，可选 O0/O3，固定 AA/AB/BA。"""
 
 import argparse
 from concurrent.futures import ThreadPoolExecutor
@@ -141,7 +141,7 @@ def source_options(path):
             raise Unsupported(f"尚未支持的指令：{kind}")
     if "-funsigned-bitfields" in flags:
         raise Unsupported("Clang 不支持 -funsigned-bitfields，不能静默忽略")
-    # 用户明确要求所有编译均使用 -O3，包括源码内指定其他优化等级的用例。
+    # 统一采用命令行选择的优化等级，过滤源码内的优化等级。
     return [flag for flag in flags if not re.fullmatch(r"-O(?:[0-3sgz]|fast)?", flag)]
 
 
@@ -203,15 +203,15 @@ class Builder:
 
     def common(self, compiler):
         return ["--target=" + TARGET, "--sysroot=" + str(self.sdk / "sysroot"),
-                "-resource-dir=" + str(self.resources), "-O3", "-fPIC"]
+                "-resource-dir=" + str(self.resources), "-O" + self.args.optimization, "-fPIC"]
 
     def compile(self, source, dest, compiler, options, log):
         cxx = source.suffix == ".C"
-        flags = (["-std=gnu++14", "-nostdinc++", "-isystem",
+        flags = (["-std=c++17", "-nostdinc++", "-isystem",
                   str(self.sdk / "llvm/include/libcxx-ohos/include/c++/v1")] if cxx else
                  ["-std=gnu17", "-DSKIP_DECIMAL_FLOAT", "-Wno-error=implicit-function-declaration", "-Wno-error=implicit-int"])
         command([self.driver(compiler, cxx), *self.common(compiler), *flags, *options,
-                 "-O3", "-c", source, "-o", dest], log, self.args.compile_timeout)
+                 "-O" + self.args.optimization, "-c", source, "-o", dest], log, self.args.compile_timeout)
 
     def link(self, objects, dest, compiler, cxx, options, log, shared=False):
         flags = ["--ld-path=" + str(self.llvm[compiler] / "bin/ld.lld"), "-L" + str(self.libs)]
@@ -230,7 +230,9 @@ class Builder:
         try:
             if case["id"] == "gcc.dg/compat/struct-by-value-22":
                 raise Unsupported("Clang 不支持结构体内 VLA；禁用后此用例将没有断言，故整例跳过")
-            options = [source_options(source) for source in case["sources"]]
+            options = [[flag for flag in source_options(source)
+                        if not (source.suffix == ".C" and flag.startswith("-std="))]
+                       for source in case["sources"]]
             if self.args.layout_debug and case["id"].startswith("generated/"):
                 options = [flags + ["-DDBG"] for flags in options]
             result["sources"] = [{"path": str(source), "sha256": sha256(source)} for source in case["sources"]]
@@ -352,6 +354,7 @@ def main():
     parser.add_argument("--layout-debug", action="store_true", help="启用上游布局用例的 DBG 断言编号输出，不修改源码或判定")
     parser.add_argument("--mode", choices=("shared", "objects", "both"), default="shared")
     parser.add_argument("--case", action="append", help="用例 ID glob，可重复")
+    parser.add_argument("--optimization", choices=("0", "3"), default="3", help="目标编译优化等级，默认 O3")
     parser.add_argument("--jobs", type=int, default=4)
     parser.add_argument("--compile-timeout", type=int, default=180)
     parser.add_argument("--timeout", type=int, default=30)
@@ -376,7 +379,7 @@ def main():
         execute(args, builder, results)
         return finish(args, results, started)
     args.out.mkdir(parents=True, exist_ok=False)
-    metadata = {"configuration": vars(args), "target": TARGET, "pairs": PAIRS, "optimization": "-O3",
+    metadata = {"configuration": vars(args), "target": TARGET, "cxx_standard": "c++17", "pairs": PAIRS, "optimization": "-O" + args.optimization,
                 "source_commit": subprocess.check_output(["git", "-C", ROOT, "rev-parse", "HEAD"], text=True).strip(),
                 "compilers": {key: {"path": str(builder.driver(key, False)), "sha256": sha256(builder.driver(key, False)),
                                       "version": subprocess.check_output([builder.driver(key, False), "--version"], text=True)} for key in "AB"},
