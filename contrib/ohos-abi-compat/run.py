@@ -280,6 +280,14 @@ def parse_results(text):
     return result
 
 
+def run_status(code, output, negative=False):
+    if negative:
+        if code == 1 and "ABI_LAYOUT_MISMATCH" in output.splitlines():
+            return "XFAIL"
+        return "XPASS" if code == 0 else "RUN_FAIL"
+    return "PASS" if code == 0 else "TIMEOUT" if code == 124 else "RUN_FAIL"
+
+
 def execute(args, builder, results):
     payload = args.out / "payload"
     payload.mkdir(exist_ok=True)
@@ -311,8 +319,11 @@ def execute(args, builder, results):
             if tar.extractfile("complete").read().strip() != b"COMPLETE":
                 raise CommandError("设备测试没有完成")
             codes = parse_results(tar.extractfile("results.tsv").read().decode())
+            outputs = {member.name.removeprefix("./").removesuffix("/run.log"):
+                       tar.extractfile(member).read().decode(errors="replace")
+                       for member in tar.getmembers() if member.isfile() and member.name.endswith("/run.log")}
         expected = {run["path"] for run in runs}
-        if set(codes) != expected:
+        if set(codes) != expected or set(outputs) != expected:
             raise CommandError("设备结果集合与计划执行集合不一致")
         for result in results:
             if result["status"] != "BUILT":
@@ -320,7 +331,7 @@ def execute(args, builder, results):
             for run in result["runs"]:
                 code = codes[run["path"]]
                 run["exit_code"] = code
-                run["status"] = ("XFAIL" if code == 1 else "XPASS" if code == 0 else "RUN_FAIL") if result["negative"] else ("PASS" if code == 0 else "TIMEOUT" if code == 124 else "RUN_FAIL")
+                run["status"] = run_status(code, outputs[run["path"]], result["negative"])
             result["status"] = "PASS" if all(run["status"] in ("PASS", "XFAIL") for run in result["runs"]) else "RUN_FAIL"
     finally:
         command(hdc + ["shell", "rm -rf " + remote], log)

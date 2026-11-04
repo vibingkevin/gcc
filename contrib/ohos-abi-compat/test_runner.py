@@ -40,6 +40,13 @@ class DirectiveTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             run.parse_results("x/AA\t0\nx/AA\t0\n")
 
+    def test_negative_control_requires_observed_layout_mismatch(self):
+        self.assertEqual(run.run_status(1, "ABI_LAYOUT_MISMATCH\n", True), "XFAIL")
+        self.assertEqual(run.run_status(1, "loader error\n", True), "RUN_FAIL")
+        self.assertEqual(run.run_status(0, "", True), "XPASS")
+        self.assertEqual(run.run_status(134, "", False), "RUN_FAIL")
+        self.assertEqual(run.run_status(124, "", False), "TIMEOUT")
+
 
 if __name__ == "__main__":
     unittest.main()
